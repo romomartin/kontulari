@@ -1,0 +1,12 @@
+name: kontulari
+
+services:
+  database:
+    image: mysql:8.0
+    ports:
+      - "33061:3306"
+    command: --init-file /data/application/init.sql
+    volumes:
+      - ./database/init.sql:/data/application/init.sql
+      - ./database/data:/var/lib/mysql
+    env_file: "./database/database.env"

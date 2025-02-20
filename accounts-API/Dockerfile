@@ -9,4 +9,4 @@ COPY ./tsconfig.json ./tsconfig.json
 COPY ./server.ts ./server.ts
 
 RUN npm install
-CMD ["npm","run","test:watch"]
+CMD ["npm","run","dev"]

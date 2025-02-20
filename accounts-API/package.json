@@ -5,6 +5,7 @@
   "main": "server.ts",
   "scripts": {
     "test": "jest",
+    "test:watch": "jest --watchAll",
     "dev": "nodemon server.ts"
   },
   "author": "romomartin",

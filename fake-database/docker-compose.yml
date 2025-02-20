@@ -1,0 +1,10 @@
+services:
+  fake-database:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    command: --init-file /data/application/init.sql
+    volumes:
+      - ./init.sql:/data/application/init.sql
+    env_file: "./database.env"
+    stdin_open: true

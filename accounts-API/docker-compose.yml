@@ -6,3 +6,13 @@ services:
     volumes:
       - ./src:/accounts-api/src
     stdin_open: true
+
+  fake-database:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    command: --init-file /data/application/init.sql
+    volumes:
+      - ../fake-database/init.sql:/data/application/init.sql
+    env_file: "../fake-database/database.env"
+    stdin_open: true

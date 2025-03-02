@@ -1,14 +1,19 @@
 import mysql from "mysql2/promise";
-import { getExpenses } from "./accounts-repository";
+import { AccountsRepository } from "./accounts-repository";
 
 describe("Accounts repository", () => {
   beforeEach(async () => {
     await populateFakeDatabase();
   });
+  afterEach(async () => {
+    await emptyFakeDatabase();
+  });
 
   describe("expenses", () => {
     it("allows getting all expenses in the database", async () => {
-      const expenses = await getExpenses();
+      const repository = new AccountsRepository();
+
+      const expenses = await repository.getExpenses();
 
       expect(expenses).toEqual([
         {
@@ -47,5 +52,17 @@ const populateFakeDatabase = async () => {
       "my description"
     ]
   );
+  await connection.end();
+};
+
+const emptyFakeDatabase = async () => {
+  const connection = await mysql.createConnection({
+    host: "fake-database",
+    user: "root",
+    password: "root",
+    database: "test"
+  });
+  await connection.query("DELETE FROM expenses");
+  await connection.query("ALTER TABLE expenses AUTO_INCREMENT = 1");
   await connection.end();
 };

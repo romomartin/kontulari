@@ -12,28 +12,32 @@ type Expense = {
   description: string;
 };
 
-export const getExpenses = async (): Promise<Expense[]> => {
-  const connection = await mysql.createConnection({
+export class AccountsRepository {
+  private configuration = {
     host: "fake-database",
     user: "root",
     password: "root",
     database: "test"
-  });
-  const [rows] = await connection.query("SELECT * FROM expenses");
-  const expenses: Expense[] = (rows as mysql.RowDataPacket[]).map((row) => {
-    return {
-      id: row["id"],
-      creationTimestamp: new Date(row["creation_timestamp"]).getTime(),
-      bankAccount: row["bank_account"],
-      accountingDate: new Date(row["accounting_date"]),
-      valueDate: new Date(row["value_date"]),
-      ogDescription: row["og_description"],
-      amount: row["amount"],
-      balance: row["balance"],
-      description: row["description"]
-    };
-  });
-  await connection.end();
+  };
 
-  return expenses;
-};
+  public getExpenses = async (): Promise<Expense[]> => {
+    const connection = await mysql.createConnection(this.configuration);
+    const [rows] = await connection.query("SELECT * FROM expenses");
+    const expenses: Expense[] = (rows as mysql.RowDataPacket[]).map((row) => {
+      return {
+        id: row["id"],
+        creationTimestamp: new Date(row["creation_timestamp"]).getTime(),
+        bankAccount: row["bank_account"],
+        accountingDate: new Date(row["accounting_date"]),
+        valueDate: new Date(row["value_date"]),
+        ogDescription: row["og_description"],
+        amount: row["amount"],
+        balance: row["balance"],
+        description: row["description"]
+      };
+    });
+    await connection.end();
+
+    return expenses;
+  };
+}

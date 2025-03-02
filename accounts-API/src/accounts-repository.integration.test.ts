@@ -1,5 +1,5 @@
 import mysql from "mysql2/promise";
-import { AccountsRepository } from "./accounts-repository";
+import { AccountsRepository, Expense } from "./accounts-repository";
 
 describe("Accounts repository", () => {
   beforeEach(async () => {
@@ -9,26 +9,43 @@ describe("Accounts repository", () => {
     await emptyFakeDatabase();
   });
 
-  describe("expenses", () => {
-    it("allows getting all expenses in the database", async () => {
-      const repository = new AccountsRepository();
+  it("allows getting all expenses from the database", async () => {
+    const repository = new AccountsRepository();
 
-      const expenses = await repository.getExpenses();
+    const expenses = await repository.getExpenses();
 
-      expect(expenses).toEqual([
-        {
-          id: 1,
-          creationTimestamp: expect.any(Number),
-          bankAccount: "Evo",
-          accountingDate: new Date(0),
-          valueDate: new Date(0),
-          ogDescription: "description",
-          amount: 12.56,
-          balance: 1246.07,
-          description: "my description"
-        }
-      ]);
-    });
+    expect(expenses).toEqual([
+      {
+        id: 1,
+        creationTimestamp: expect.any(Number),
+        bankAccount: "Evo",
+        accountingDate: new Date(0),
+        valueDate: new Date(0),
+        ogDescription: "description",
+        amount: 12.56,
+        balance: 1246.07,
+        description: "my description"
+      }
+    ]);
+  });
+
+  it("allows adding a expense to the database", async () => {
+    const repository = new AccountsRepository();
+    const expense: Expense = {
+      id: 1,
+      creationTimestamp: expect.any(Number),
+      bankAccount: "Evo",
+      accountingDate: new Date(0),
+      valueDate: new Date(0),
+      ogDescription: "description",
+      amount: 12.56,
+      balance: 1246.07,
+      description: "my description"
+    };
+
+    const addedExpense = await repository.addExpense(expense);
+
+    expect(addedExpense).toEqual(expense);
   });
 });
 

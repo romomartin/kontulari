@@ -61,6 +61,7 @@ export class AccountsRepository {
         )`;
     const connection = await mysql.createConnection(this.configuration);
     await connection.query<ResultSetHeader>(sql);
+    await connection.end();
 
     return expense;
   };

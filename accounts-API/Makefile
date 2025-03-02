@@ -8,6 +8,10 @@ test-integration:
 	docker compose up -d fake-database
 	docker compose run --rm api npm run test-integration
 
+test-watch-integration: 
+	docker compose up -d fake-database
+	docker compose run --rm api npm run test-watch-integration
+
 start: 
 	docker compose build && docker compose up
 

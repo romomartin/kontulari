@@ -5,8 +5,9 @@
   "main": "server.ts",
   "scripts": {
     "test": "jest --testPathIgnorePatterns='.*integration.*'",
-    "test-integration": "jest /src/accounts-repository.integration.test.ts",
     "test:watch": "jest --watchAll --testPathIgnorePatterns='.*integration.*'",
+    "test-integration": "jest /src/accounts-repository.integration.test.ts",
+    "test-watch-integration": "jest --watchAll /src/accounts-repository.integration.test.ts",
     "dev": "nodemon server.ts"
   },
   "author": "romomartin",
